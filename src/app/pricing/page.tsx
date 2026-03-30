@@ -68,16 +68,14 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            <button
-              className={`w-full text-center mt-8 ${
+            <Link
+              href="/signup"
+              className={`block w-full text-center mt-8 ${
                 plan.popular ? "btn-primary" : "btn-secondary"
               }`}
             >
-              {plan.price === 19 ? "Start Free Trial" : "Subscribe Now"}
-            </button>
-            <p className="text-center text-xs text-[var(--color-muted)] mt-3">
-              Stripe checkout coming soon
-            </p>
+              Get Started
+            </Link>
           </div>
         ))}
       </div>
