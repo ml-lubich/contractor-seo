@@ -3,27 +3,21 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { GeneratedPage, Trade } from "./types";
 import { generateSEOContent } from "./seo-generator";
 
-let tableChecked = false;
+let tableVerified = false;
 
 async function ensureTable() {
-  if (tableChecked) return;
+  if (tableVerified) return;
 
   const admin = createAdminClient();
   const { error } = await admin.from("generated_pages").select("id").limit(1);
 
   if (error?.message?.includes("does not exist")) {
-    // Create the table using raw SQL via admin client
-    const { error: createError } = await admin.rpc("_create_generated_pages_table");
-    if (createError) {
-      // Table creation via RPC failed — try a direct insert to see if table exists now
-      // This can happen if the RPC doesn't exist. The migration SQL needs to be run manually.
-      console.warn(
-        "Could not auto-create table. Please run the migration SQL from supabase/migrations/001_create_generated_pages.sql in your Supabase SQL Editor."
-      );
-    }
+    throw new Error(
+      "Database not set up. Visit /api/setup for instructions, or run the SQL from supabase/migrations/001_create_generated_pages.sql in your Supabase SQL Editor."
+    );
   }
 
-  tableChecked = true;
+  tableVerified = true;
 }
 
 export async function getUserPages(): Promise<GeneratedPage[]> {
@@ -87,6 +81,7 @@ export async function createPage(input: {
       phone: input.phone,
       slug: input.slug,
       seo_content: seoContent,
+      is_published: true,
     })
     .select()
     .single();

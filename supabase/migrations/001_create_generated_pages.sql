@@ -14,39 +14,55 @@ create table if not exists public.generated_pages (
   updated_at timestamptz default now()
 );
 
--- Index for fast lookups
+-- Indexes (idempotent)
 create unique index if not exists idx_generated_pages_slug on public.generated_pages(slug);
 create index if not exists idx_generated_pages_user_id on public.generated_pages(user_id);
 
--- Enable RLS
+-- Enable RLS (idempotent — no error if already enabled)
 alter table public.generated_pages enable row level security;
 
--- Users can only see their own pages
-create policy "Users can view own pages"
-  on public.generated_pages for select
-  using (auth.uid() = user_id);
+-- Policies (idempotent using DO blocks)
+do $$ begin
+  if not exists (select 1 from pg_policies where tablename = 'generated_pages' and policyname = 'Users can view own pages') then
+    create policy "Users can view own pages"
+      on public.generated_pages for select
+      using (auth.uid() = user_id);
+  end if;
+end $$;
 
--- Users can insert their own pages
-create policy "Users can insert own pages"
-  on public.generated_pages for insert
-  with check (auth.uid() = user_id);
+do $$ begin
+  if not exists (select 1 from pg_policies where tablename = 'generated_pages' and policyname = 'Users can insert own pages') then
+    create policy "Users can insert own pages"
+      on public.generated_pages for insert
+      with check (auth.uid() = user_id);
+  end if;
+end $$;
 
--- Users can update their own pages
-create policy "Users can update own pages"
-  on public.generated_pages for update
-  using (auth.uid() = user_id);
+do $$ begin
+  if not exists (select 1 from pg_policies where tablename = 'generated_pages' and policyname = 'Users can update own pages') then
+    create policy "Users can update own pages"
+      on public.generated_pages for update
+      using (auth.uid() = user_id);
+  end if;
+end $$;
 
--- Users can delete their own pages
-create policy "Users can delete own pages"
-  on public.generated_pages for delete
-  using (auth.uid() = user_id);
+do $$ begin
+  if not exists (select 1 from pg_policies where tablename = 'generated_pages' and policyname = 'Users can delete own pages') then
+    create policy "Users can delete own pages"
+      on public.generated_pages for delete
+      using (auth.uid() = user_id);
+  end if;
+end $$;
 
--- Anyone can view published pages (for public preview)
-create policy "Anyone can view published pages"
-  on public.generated_pages for select
-  using (is_published = true);
+do $$ begin
+  if not exists (select 1 from pg_policies where tablename = 'generated_pages' and policyname = 'Anyone can view published pages') then
+    create policy "Anyone can view published pages"
+      on public.generated_pages for select
+      using (is_published = true);
+  end if;
+end $$;
 
--- Auto-update updated_at
+-- Auto-update updated_at (idempotent)
 create or replace function public.handle_updated_at()
 returns trigger as $$
 begin
@@ -55,6 +71,7 @@ begin
 end;
 $$ language plpgsql;
 
+drop trigger if exists on_generated_pages_updated on public.generated_pages;
 create trigger on_generated_pages_updated
   before update on public.generated_pages
   for each row execute function public.handle_updated_at();
