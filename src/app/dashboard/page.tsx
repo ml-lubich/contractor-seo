@@ -1,31 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { TRADES } from "@/lib/types";
-
-interface StoredPage {
-  trade: string;
-  city: string;
-  state: string;
-  businessName: string;
-  phone: string;
-  slug: string;
-  created_at: string;
-}
+import { useEffect, useState, useCallback } from "react";
+import { TRADES, GeneratedPage } from "@/lib/types";
 
 export default function DashboardPage() {
-  const [pages, setPages] = useState<StoredPage[]>([]);
+  const [pages, setPages] = useState<GeneratedPage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("ranklocal_pages") || "[]");
-    setPages(stored);
+  const fetchPages = useCallback(async () => {
+    try {
+      const res = await fetch("/api/pages");
+      if (!res.ok) throw new Error("Failed to load pages");
+      const data = await res.json();
+      setPages(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load pages");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  function deletePage(slug: string) {
-    const updated = pages.filter((p) => p.slug !== slug);
-    setPages(updated);
-    localStorage.setItem("ranklocal_pages", JSON.stringify(updated));
+  useEffect(() => {
+    fetchPages();
+  }, [fetchPages]);
+
+  async function handleDelete(id: string) {
+    try {
+      const res = await fetch(`/api/pages/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete");
+      setPages((prev) => prev.filter((p) => p.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete page");
+    }
   }
 
   function getTradeIcon(trade: string) {
@@ -34,6 +42,26 @@ export default function DashboardPage() {
 
   function getTradeLabel(trade: string) {
     return TRADES.find((t) => t.value === trade)?.label || trade;
+  }
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="animate-pulse space-y-6">
+          <div className="h-8 bg-[var(--color-card)] rounded w-48" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="card h-24" />
+            ))}
+          </div>
+          <div className="space-y-4">
+            {[1, 2].map((i) => (
+              <div key={i} className="card h-20" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -49,6 +77,12 @@ export default function DashboardPage() {
           + Generate New Page
         </Link>
       </div>
+
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm mb-6">
+          {error}
+        </div>
+      )}
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -102,14 +136,14 @@ export default function DashboardPage() {
         <div className="space-y-4">
           {pages.map((page) => (
             <div
-              key={page.slug}
+              key={page.id}
               className="card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
             >
               <div className="flex items-center gap-4">
                 <span className="text-3xl">{getTradeIcon(page.trade)}</span>
                 <div>
                   <h3 className="font-semibold text-lg">
-                    {page.businessName}
+                    {page.business_name}
                   </h3>
                   <p className="text-sm text-[var(--color-secondary)]">
                     {getTradeLabel(page.trade)} &middot; {page.city},{" "}
@@ -123,13 +157,13 @@ export default function DashboardPage() {
               </div>
               <div className="flex items-center gap-3 w-full sm:w-auto">
                 <Link
-                  href={`/preview/${page.slug}?trade=${page.trade}&city=${encodeURIComponent(page.city)}&state=${page.state}&business=${encodeURIComponent(page.businessName)}&phone=${encodeURIComponent(page.phone)}`}
+                  href={`/preview/${page.slug}`}
                   className="btn-secondary text-sm px-4 py-2 flex-1 sm:flex-none text-center"
                 >
                   View Page
                 </Link>
                 <button
-                  onClick={() => deletePage(page.slug)}
+                  onClick={() => handleDelete(page.id)}
                   className="text-red-400 hover:text-red-300 text-sm px-4 py-2 border border-red-500/20 rounded-lg hover:bg-red-500/10 transition-colors"
                 >
                   Delete

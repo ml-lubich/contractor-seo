@@ -21,32 +21,33 @@ export default function GeneratePage() {
   const [businessName, setBusinessName] = useState("");
   const [phone, setPhone] = useState("");
   const [generating, setGenerating] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleGenerate(e: React.FormEvent) {
+  async function handleGenerate(e: React.FormEvent) {
     e.preventDefault();
     if (!trade) return;
     setGenerating(true);
+    setError("");
 
     const slug = generateSlug(businessName, trade as Trade, city);
 
-    // Store in localStorage for the preview page
-    const pageData = {
-      trade,
-      city,
-      state,
-      businessName,
-      phone,
-      slug,
-      created_at: new Date().toISOString(),
-    };
+    try {
+      const res = await fetch("/api/pages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ trade, city, state, businessName, phone, slug }),
+      });
 
-    const existing = JSON.parse(localStorage.getItem("ranklocal_pages") || "[]");
-    existing.push(pageData);
-    localStorage.setItem("ranklocal_pages", JSON.stringify(existing));
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to generate page");
+      }
 
-    setTimeout(() => {
-      router.push(`/preview/${slug}?trade=${trade}&city=${encodeURIComponent(city)}&state=${state}&business=${encodeURIComponent(businessName)}&phone=${encodeURIComponent(phone)}`);
-    }, 1500);
+      router.push(`/preview/${slug}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setGenerating(false);
+    }
   }
 
   return (
@@ -84,6 +85,12 @@ export default function GeneratePage() {
             </div>
           ))}
         </div>
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm mb-4">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleGenerate} className="card">
           {/* Step 1: Pick Trade */}

@@ -15,7 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RankLocal — SEO Landing Pages for Local Contractors",
+  title: {
+    default: "RankLocal — SEO Landing Pages for Local Contractors",
+    template: "%s | RankLocal",
+  },
   description:
     "Generate SEO-optimized landing pages for your contracting business in 60 seconds. Rank on Google for your trade + city. Plumbers, HVAC, electricians, roofers & more.",
   keywords: [
@@ -26,7 +29,24 @@ export const metadata: Metadata = {
     "electrician SEO",
     "roofer website",
     "contractor marketing",
+    "local landing pages",
+    "contractor lead generation",
   ],
+  openGraph: {
+    title: "RankLocal — SEO Landing Pages for Local Contractors",
+    description: "Generate SEO-optimized landing pages for your contracting business in 60 seconds.",
+    type: "website",
+    siteName: "RankLocal",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RankLocal — SEO Landing Pages for Local Contractors",
+    description: "Generate SEO-optimized landing pages for your contracting business in 60 seconds.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

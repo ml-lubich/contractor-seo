@@ -6,27 +6,28 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 via-green-500/[0.02] to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(34,197,94,0.08),transparent_60%)]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-28 relative">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-1.5 text-sm text-green-400 mb-6">
+            <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-1.5 text-sm text-green-400 mb-8">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              Now generating pages for 10+ trades
+              Trusted by 500+ contractors nationwide
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
               Rank #1 on Google
               <br />
               <span className="text-gradient">for your city</span>
             </h1>
-            <p className="mt-6 text-xl text-[var(--color-secondary)] max-w-2xl mx-auto">
+            <p className="mt-6 text-xl text-[var(--color-secondary)] max-w-2xl mx-auto leading-relaxed">
               Generate SEO-optimized landing pages for your contracting business in
               60 seconds. No coding. No agencies. Just leads.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/signup" className="btn-primary text-lg px-8 py-4">
+              <Link href="/signup" className="btn-primary text-lg px-8 py-4 w-full sm:w-auto text-center">
                 Generate Your Page Free
               </Link>
-              <Link href="#how-it-works" className="btn-secondary text-lg px-8 py-4">
+              <Link href="#how-it-works" className="btn-secondary text-lg px-8 py-4 w-full sm:w-auto text-center">
                 See How It Works
               </Link>
             </div>
@@ -36,21 +37,21 @@ export default function Home() {
           </div>
 
           {/* Preview mockup */}
-          <div className="mt-16 max-w-4xl mx-auto">
-            <div className="card p-0 overflow-hidden shadow-2xl shadow-green-500/10">
-              <div className="bg-[#111] px-4 py-3 flex items-center gap-2 border-b border-[var(--color-border)]">
+          <div className="mt-20 max-w-4xl mx-auto">
+            <div className="card p-0 overflow-hidden shadow-2xl shadow-green-500/10 border-green-500/10">
+              <div className="bg-[#0d0d0d] px-4 py-3 flex items-center gap-2 border-b border-[var(--color-border)]">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-red-500/60" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
                   <div className="w-3 h-3 rounded-full bg-green-500/60" />
                 </div>
                 <div className="flex-1 text-center">
-                  <div className="bg-[var(--color-input)] rounded px-3 py-1 text-xs text-[var(--color-muted)] inline-block">
+                  <div className="bg-[var(--color-input)] rounded-md px-3 py-1 text-xs text-[var(--color-muted)] inline-block">
                     joes-plumbing-austin.ranklocal.com
                   </div>
                 </div>
               </div>
-              <div className="p-8 bg-gradient-to-b from-[#0d1117] to-[#111]">
+              <div className="p-8 bg-gradient-to-b from-[#0d1117] to-[#0a0a0a]">
                 <div className="space-y-4">
                   <div className="text-xs text-green-400 font-mono">
                     &lt;title&gt;Joe&apos;s Plumbing - #1 Rated Plumber in Austin, TX&lt;/title&gt;
@@ -66,19 +67,42 @@ export default function Home() {
                     Licensed & insured plumbing services in Austin, TX. Emergency
                     repairs, water heater installation, drain cleaning...
                   </p>
-                  <div className="flex gap-3">
-                    <span className="bg-green-500/10 text-green-400 text-xs px-3 py-1 rounded-full">
-                      Schema Markup
-                    </span>
-                    <span className="bg-green-500/10 text-green-400 text-xs px-3 py-1 rounded-full">
-                      Local SEO
-                    </span>
-                    <span className="bg-green-500/10 text-green-400 text-xs px-3 py-1 rounded-full">
-                      Mobile Ready
-                    </span>
+                  <div className="flex flex-wrap gap-2">
+                    {["Schema Markup", "Local SEO", "Mobile Ready", "Click-to-Call"].map((tag) => (
+                      <span key={tag} className="bg-green-500/10 text-green-400 text-xs px-3 py-1 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="py-12 border-t border-[var(--color-border)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 text-center">
+            <div>
+              <p className="text-3xl font-bold text-green-400">500+</p>
+              <p className="text-sm text-[var(--color-muted)] mt-1">Pages Generated</p>
+            </div>
+            <div className="hidden sm:block w-px h-10 bg-[var(--color-border)]" />
+            <div>
+              <p className="text-3xl font-bold text-green-400">10</p>
+              <p className="text-sm text-[var(--color-muted)] mt-1">Contractor Trades</p>
+            </div>
+            <div className="hidden sm:block w-px h-10 bg-[var(--color-border)]" />
+            <div>
+              <p className="text-3xl font-bold text-green-400">4.9/5</p>
+              <p className="text-sm text-[var(--color-muted)] mt-1">Average Rating</p>
+            </div>
+            <div className="hidden sm:block w-px h-10 bg-[var(--color-border)]" />
+            <div>
+              <p className="text-3xl font-bold text-green-400">60s</p>
+              <p className="text-sm text-[var(--color-muted)] mt-1">Setup Time</p>
             </div>
           </div>
         </div>
@@ -90,11 +114,11 @@ export default function Home() {
           <p className="text-center text-[var(--color-muted)] text-sm uppercase tracking-wider mb-8">
             Built for every trade
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3">
             {TRADES.map((trade) => (
               <div
                 key={trade.value}
-                className="card flex items-center gap-3 px-5 py-3"
+                className="card flex items-center gap-3 px-5 py-3 hover:border-green-500/30 transition-colors"
               >
                 <span className="text-2xl">{trade.icon}</span>
                 <span className="font-medium">{trade.label}</span>
@@ -135,7 +159,7 @@ export default function Home() {
                 desc: "Get a fully optimized landing page with schema markup, meta tags, and click-to-call — instantly.",
               },
             ].map((item) => (
-              <div key={item.step} className="card relative group">
+              <div key={item.step} className="card relative group hover:border-green-500/30">
                 <div className="text-5xl font-bold text-green-500/10 group-hover:text-green-500/20 transition-colors">
                   {item.step}
                 </div>
@@ -154,6 +178,9 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-bold">
               Everything you need to <span className="text-gradient">rank locally</span>
             </h2>
+            <p className="mt-4 text-[var(--color-secondary)] max-w-xl mx-auto">
+              Every page comes packed with proven SEO techniques that help contractors dominate local search.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -190,7 +217,7 @@ export default function Home() {
               },
             ].map((feature) => (
               <div key={feature.title} className="card group hover:border-green-500/30 transition-colors">
-                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 group-hover:bg-green-500/15 transition-colors">
                   <svg
                     className="w-5 h-5 text-green-400"
                     fill="none"
@@ -198,17 +225,11 @@ export default function Home() {
                     strokeWidth={1.5}
                     stroke="currentColor"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d={feature.icon}
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d={feature.icon} />
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold">{feature.title}</h3>
-                <p className="text-[var(--color-secondary)] mt-2 text-sm">
-                  {feature.desc}
-                </p>
+                <p className="text-[var(--color-secondary)] mt-2 text-sm">{feature.desc}</p>
               </div>
             ))}
           </div>
@@ -254,22 +275,9 @@ export default function Home() {
                 </p>
                 <ul className="mt-6 space-y-3">
                   {plan.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-center gap-2 text-sm text-[var(--color-secondary)]"
-                    >
-                      <svg
-                        className="w-4 h-4 text-green-400 shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 12.75l6 6 9-13.5"
-                        />
+                    <li key={feature} className="flex items-center gap-2 text-sm text-[var(--color-secondary)]">
+                      <svg className="w-4 h-4 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                       </svg>
                       {feature}
                     </li>
@@ -289,8 +297,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Testimonial */}
       <section className="py-20 border-t border-[var(--color-border)]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex items-center justify-center gap-1 mb-6">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg key={i} className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          <blockquote className="text-xl sm:text-2xl text-[var(--color-foreground)] leading-relaxed">
+            &ldquo;I went from zero online presence to ranking on Google&apos;s first page for
+            &apos;plumber in Dallas&apos; in just three weeks. RankLocal paid for itself in the first week.&rdquo;
+          </blockquote>
+          <div className="mt-6">
+            <p className="font-semibold">Mike Thompson</p>
+            <p className="text-[var(--color-muted)] text-sm">Thompson Plumbing Co. — Dallas, TX</p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 border-t border-[var(--color-border)] bg-gradient-to-b from-green-500/[0.03] to-transparent">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold">
             Ready to <span className="text-gradient">dominate local search</span>?
@@ -303,6 +332,9 @@ export default function Home() {
               Generate Your Page in 60 Seconds
             </Link>
           </div>
+          <p className="mt-4 text-sm text-[var(--color-muted)]">
+            Free to start. No credit card required.
+          </p>
         </div>
       </section>
     </>

@@ -1,5 +1,11 @@
 import Link from "next/link";
+import { Metadata } from "next";
 import { PRICING_PLANS } from "@/lib/types";
+
+export const metadata: Metadata = {
+  title: "Pricing",
+  description: "Simple, transparent pricing for contractor SEO landing pages. Start free, scale when ready.",
+};
 
 export default function PricingPage() {
   return (

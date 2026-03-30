@@ -32,6 +32,7 @@ export interface GeneratedPage {
   business_name: string;
   phone: string;
   slug: string;
+  seo_content: SEOContent | null;
   created_at: string;
   updated_at: string;
   is_published: boolean;

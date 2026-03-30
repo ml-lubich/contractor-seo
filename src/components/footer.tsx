@@ -63,8 +63,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-[var(--color-border)] text-center text-[var(--color-muted)] text-sm">
-          &copy; {new Date().getFullYear()} RankLocal. All rights reserved.
+        <div className="mt-8 pt-8 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4 text-[var(--color-muted)] text-sm">
+          <p>&copy; {new Date().getFullYear()} RankLocal. All rights reserved.</p>
+          <p>SEO landing pages for contractors</p>
         </div>
       </div>
     </footer>
