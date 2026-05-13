@@ -41,6 +41,7 @@ flowchart LR
 - [Getting Started](#getting-started)
 - [Deploy](#deploy)
 - [🗺️ Repository map](#️-repository-map)
+- [📊 Code composition](#-code-composition)
 
 ## Page generation (sequence)
 
@@ -137,4 +138,21 @@ mindmap
       next.config.ts
       package.json
       tsconfig.json
+```
+
+
+## 📊 Code composition
+
+File-type breakdown of source under this repo (skips `.git`, `node_modules`, build caches, lockfiles).
+
+```mermaid
+pie showData title File-type composition of contractor-seo (42 files)
+    "TypeScript" : 25
+    "SVG image" : 5
+    "Markdown" : 4
+    "JavaScript" : 2
+    "JSON" : 2
+    "SQL" : 1
+    "Other" : 2
+    "Image" : 1
 ```
