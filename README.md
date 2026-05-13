@@ -36,8 +36,48 @@ flowchart LR
 
 - [Stack](#stack)
 - [Architecture](#architecture)
+- [Page generation (sequence)](#page-generation-sequence)
+- [User flow (state)](#user-flow-state)
 - [Getting Started](#getting-started)
 - [Deploy](#deploy)
+
+## Page generation (sequence)
+
+```mermaid
+sequenceDiagram
+    participant U as contractor
+    participant W as /generate wizard
+    participant API as /api/generate
+    participant AI as LLM (SEO copy)
+    participant DB as Supabase
+    participant ST as Supabase Storage
+
+    U->>W: enter trade + city
+    W->>API: POST {trade, city}
+    API->>AI: prompt(SEO landing for trade+city)
+    AI-->>API: title + meta + sections
+    API->>ST: store assets (if any)
+    API->>DB: insert page row
+    DB-->>API: slug
+    API-->>W: redirect /preview/[slug]
+    W-->>U: live preview + publish CTA
+```
+
+## User flow (state)
+
+```mermaid
+stateDiagram-v2
+    [*] --> Visitor
+    Visitor --> Auth: signup / login
+    Auth --> Dashboard
+    Dashboard --> Generate: new page
+    Generate --> Preview: AI returns draft
+    Preview --> Dashboard: save
+    Preview --> Published: publish slug
+    Visitor --> Pricing: view plans
+    Pricing --> Auth
+    Published --> [*]
+```
 
 ## Stack
 
