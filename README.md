@@ -40,6 +40,7 @@ flowchart LR
 - [User flow (state)](#user-flow-state)
 - [Getting Started](#getting-started)
 - [Deploy](#deploy)
+- [🗺️ Repository map](#️-repository-map)
 
 ## Page generation (sequence)
 
@@ -109,3 +110,31 @@ You can start editing the page by modifying `src/app/page.tsx`. The page auto-up
 ## Deploy
 
 The easiest way to deploy is via the [Vercel Platform](https://vercel.com/new). See the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for details.
+
+
+## 🗺️ Repository map
+
+Top-level layout of `contractor-seo` rendered as a Mermaid mindmap (auto-generated from the on-disk tree).
+
+```mermaid
+mindmap
+  root((contractor-seo))
+    public/
+      file.svg
+      globe.svg
+      next.svg
+      vercel.svg
+      window.svg
+    src/
+      app
+      components
+      lib
+      middleware.ts
+    supabase/
+      migrations
+    files
+      README.md
+      next.config.ts
+      package.json
+      tsconfig.json
+```
